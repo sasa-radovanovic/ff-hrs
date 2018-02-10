@@ -1,0 +1,21 @@
+<div class="bounds global-page-content-container">
+    <div class="content"
+         fxLayout="row"
+         fxFlexFill>
+
+        <div fxFlex="80" fxFlexOffset="10" style="margin-bottom: 20px;">
+            <mat-card class="mat-elevation-z8">
+                <mat-card-content>
+                    <mat-tab-group>
+                        <mat-tab label="My requests">
+                            <user-requests [userRequests]="myRequests" (dataChanged)="reloadData($event)"></user-requests>
+                        </mat-tab>
+                        <mat-tab label="Team requests" *ngIf="user !== undefined && user['role'] === 'ROLE_TEAM_ADMIN'">
+                            <team-requests [teamRequests]="teamRequests"></team-requests>
+                        </mat-tab>
+                    </mat-tab-group>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>

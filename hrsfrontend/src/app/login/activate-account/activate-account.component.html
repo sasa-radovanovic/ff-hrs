@@ -1,0 +1,56 @@
+<div class="bounds activation-container">
+    <div class="content"
+         fxLayout="row"
+         fxFlexFill>
+
+        <div fxFlex="50" fxFlexOffset="25">
+            <mat-card *ngIf="!validating && !hashValidated">
+                <mat-card-content>
+                    <h4>Oooooops... Data does not match to your account. Please contact support.</h4>
+                </mat-card-content>
+            </mat-card>
+            <mat-card *ngIf="validating">
+                <mat-card-content class="loading-content">
+                    <mat-spinner color="accent"></mat-spinner>
+                </mat-card-content>
+            </mat-card>
+            <mat-card class="mat-elevation-z8" *ngIf="hashValidated && !validating">
+                <mat-card-title>
+                    Welcome {{user.firstName}} {{user.lastName}}, set your password
+                </mat-card-title>
+                <div>
+                    <form [formGroup]="activateAccountForm" (ngSubmit)="onSubmit(activateAccountForm.value)"
+                          class="activation-form-container">
+                        <mat-form-field>
+                            <input matInput placeholder="Password" formControlName="password" type="password"
+                                   required>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input matInput placeholder="Repeat Password" formControlName="repeatPassword"
+                                   type="password"
+                                   required>
+                        </mat-form-field>
+                        <mat-error
+                                *ngIf="activateAccountForm.get('password').hasError('required') || activateAccountForm.get('repeatPassword').hasError('required')">
+                            Password is required
+                        </mat-error>
+                        <mat-error
+                                *ngIf="activateAccountForm.get('password').hasError('validatePassword') || activateAccountForm.get('repeatPassword').hasError('validatePassword')">
+                            Password must have exactly 8 alphanumeric characters
+                        </mat-error>
+                        <mat-error
+                                *ngIf="!passwordMatch">
+                            Entered passwords do not match
+                        </mat-error>
+                    </form>
+                </div>
+                <mat-card-actions align="end">
+                    <button mat-raised-button color="accent" [disabled]="activateAccountForm.invalid"
+                            (click)="onSubmit(activateAccountForm.value)">Set password
+                    </button>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+
+    </div>
+</div>

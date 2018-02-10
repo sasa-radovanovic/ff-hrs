@@ -1,0 +1,41 @@
+<div class="bounds global-page-content-container">
+    <div class="content"
+         fxLayout="row"
+         fxFlexFill>
+
+        <div fxFlex="80" fxFlexOffset="10" style="margin-bottom: 20px;">
+            <mat-card class="mat-elevation-z8">
+                <mat-card-title>
+                    <span>New holiday request</span>
+                </mat-card-title>
+                <mat-card-content>
+                    <div>
+                        <form [formGroup]="newHolidayRequestForm">
+                            <div>
+                                <mat-form-field class="example-full-width">
+                                    <input matInput [min]="minDateStart" [max]="maxDateStart" [matDatepicker]="picker1" placeholder="Start date" formControlName="startDate"
+                                           (dateChange)="startDateChange($event)">
+                                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker1></mat-datepicker>
+                                </mat-form-field>
+                                <mat-form-field class="example-full-width">
+                                    <input matInput [min]="minDateEnd" [max]="maxDateEnd" [matDatepicker]="picker2" placeholder="End date" formControlName="endDate"
+                                           (dateChange)="endDateChange($event)">
+                                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker2></mat-datepicker>
+                                </mat-form-field>
+                                <div>
+                                    <mat-error *ngIf="!datesValidated">
+                                        You already have a request placed which includes these days
+                                    </mat-error>
+                                    <button mat-raised-button color="accent" [disabled]="!datesValidated || validating" (click)="createNewHolidayRequest(newHolidayRequestForm.value)">Create holiday request for {{requestLength}} day(s)</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,147 @@
+<div class="bounds user-overview-container">
+    <div class="content"
+         fxLayout="row"
+         fxFlexFill>
+
+        <div fxFlex="60" fxFlexOffset="20" *ngIf="dataLoaded" class="mat-elevation-z8">
+            <mat-card>
+                <mat-card-title>
+                    <span>{{user.firstName}} {{user.lastName}}</span>
+                    <span fxFlex></span>
+                    <div style="margin-right: 5px;" *ngIf="user.role !=='ROLE_ADMIN'">
+                        <button mat-mini-fab matTooltip="User active" style="background-color: lightgreen;" *ngIf="user.active === true">
+                            <mat-icon aria-label="User active">done</mat-icon>
+                        </button>
+                        <button mat-mini-fab matTooltip="Resend activation mail" style="background-color: lightpink;" *ngIf="user.active !== true">
+                            <mat-icon aria-label="User active">autorenew</mat-icon>
+                        </button>
+                    </div>
+                    <div class="icon-holder" style="margin-right: 5px;">
+                        <button mat-mini-fab color="primary">
+                            <mat-icon *ngIf="user.role ==='ROLE_USER'" matTooltip="Role: User">
+                                person_outline
+                            </mat-icon>
+                            <mat-icon *ngIf="user.role ==='ROLE_TEAM_ADMIN'" matTooltip="Role: Team admin">
+                                person
+                            </mat-icon>
+                            <mat-icon *ngIf="user.role ==='ROLE_ADMIN'" matTooltip="Role: Admin">group
+                            </mat-icon>
+                        </button>
+                    </div>
+                    <div style="margin-right: 5px;" *ngIf="user.role !=='ROLE_ADMIN'">
+                        <button mat-mini-fab color="primary" matTooltip="Change name" (click)="changeName()">
+                            <mat-icon aria-label="Edit email">font_download</mat-icon>
+                        </button>
+                    </div>
+                    <div *ngIf="user.role !=='ROLE_ADMIN'">
+                        <button mat-mini-fab color="primary" matTooltip="Delete user" (click)="removeAccount()">
+                            <mat-icon aria-label="Edit email">clear</mat-icon>
+                        </button>
+                    </div>
+                </mat-card-title>
+                <mat-card-content>
+                    <div fxLayout="row" fxFlexFill>
+                        <div fxFlex="33">
+                            <mat-card>
+                                <mat-card-header>
+                                    <mat-card-title>Username</mat-card-title>
+                                    <mat-card-subtitle class="user-detail-cards">
+                                        {{ user.username }}
+                                        <button mat-mini-fab disabled>
+                                            <mat-icon aria-label="Edit email">verified_user</mat-icon>
+                                        </button>
+                                    </mat-card-subtitle>
+                                </mat-card-header>
+                            </mat-card>
+                        </div>
+                        <div fxFlex="33">
+                            <mat-card>
+                                <mat-card-header>
+                                    <mat-card-title>Email</mat-card-title>
+                                    <mat-card-subtitle class="user-detail-cards">
+                                        {{ user.email }}
+                                        <button mat-mini-fab color="accent" (click)="editMail()">
+                                            <mat-icon aria-label="Edit email">mode_edit</mat-icon>
+                                        </button>
+                                    </mat-card-subtitle>
+                                </mat-card-header>
+                            </mat-card>
+                        </div>
+                        <div fxFlex="33">
+                            <mat-card>
+                                <mat-card-header>
+                                    <mat-card-title>Team</mat-card-title>
+                                    <mat-card-subtitle class="user-detail-cards">
+                                        {{ user.team }}
+
+                                        <button mat-mini-fab color="accent" (click)="removeFromTeam()"
+                                                *ngIf="user['team'] !== ''">
+                                            <mat-icon aria-label="Remove team">clear</mat-icon>
+                                        </button>
+                                    </mat-card-subtitle>
+                                </mat-card-header>
+                            </mat-card>
+                        </div>
+                    </div>
+                </mat-card-content>
+                <mat-card-content fxLayout="row" fxFlexFill *ngIf="user.role !=='ROLE_ADMIN'">
+                    <div fxFlex="70" class="requests-holder" *ngIf="dataLoaded">
+                        <h4>Unapproved holiday requests</h4>
+                        <mat-card class="mat-elevation-z8 no-requests-card" *ngIf="unapproved.length === 0">
+                            <span>No unpproved holiday requests</span>
+                        </mat-card>
+                        <mat-card class="mat-elevation-z6 team-admin-card" *ngFor="let req of unapproved">
+                            <mat-card-header class="team-admin-header">
+                                <div mat-card-avatar>
+                                    <mat-icon color="accent" class="team-admin-avatar">group</mat-icon>
+                                </div>
+                                <mat-card-title>{{req.startDate}} - {{req.endDate}}</mat-card-title>
+                                <button mat-mini-fab color="primary" class="approve-request" matTooltip="Approve"
+                                        (click)="approveRequest(req.id)">
+                                    <mat-icon aria-label="Approve request">done</mat-icon>
+                                </button>
+                                <button mat-mini-fab color="accent" class="remove-team-button"
+                                        matTooltip="Delete request" (click)="deleteRequest(req.id)">
+                                    <mat-icon aria-label="Delete request">clear</mat-icon>
+                                </button>
+                            </mat-card-header>
+                        </mat-card>
+                        <h4>Approved holiday requests</h4>
+                        <mat-card class="mat-elevation-z8 no-requests-card" *ngIf="approved.length === 0">
+                            <span>No approved holiday requests</span>
+                        </mat-card>
+                        <mat-card class="mat-elevation-z6 team-admin-card approved-holiday" *ngFor="let req of approved">
+                            <mat-card-header class="team-admin-header">
+                                <div mat-card-avatar>
+                                    <mat-icon color="accent" class="team-admin-avatar">group</mat-icon>
+                                </div>
+                                <mat-card-title>{{req.startDate}} - {{req.endDate}}</mat-card-title>
+                                <button mat-mini-fab color="accent" class="remove-team-button"
+                                        matTooltip="Delete request" (click)="deleteRequest(req.id)">
+                                    <mat-icon aria-label="Delete request">clear</mat-icon>
+                                </button>
+                            </mat-card-header>
+                        </mat-card>
+                    </div>
+                    <div fxFlex="30" *ngIf="dataLoaded && user['adminTeams'] && user['adminTeams'].length > 0">
+                        <h4>Team admin</h4>
+                        <mat-card class="mat-elevation-z6 team-admin-card" *ngFor="let team of user['adminTeams']">
+                            <mat-card-header class="team-admin-header">
+                                <div mat-card-avatar>
+                                    <mat-icon color="accent" class="team-admin-avatar">group</mat-icon>
+                                </div>
+                                <mat-card-title>{{team}}</mat-card-title>
+                                <button mat-mini-fab color="accent" class="remove-team-button"
+                                        (click)="removeAsTeamAdmin(team)">
+                                    <mat-icon aria-label="Remove team">clear</mat-icon>
+                                </button>
+                            </mat-card-header>
+                        </mat-card>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+
+
+    </div>
+</div>

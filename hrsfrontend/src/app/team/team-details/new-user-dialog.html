@@ -1,0 +1,52 @@
+<h1 mat-dialog-title *ngIf="data.type === 'user'">Add new user to {{data.team}}</h1>
+<h1 mat-dialog-title *ngIf="data.type === 'team_admin'">Add new team admin to {{data.team}}</h1>
+<div mat-dialog-content>
+    <div class="search-user-header">
+        <mat-form-field>
+            <input matInput (keyup)="searchUsers($event.target.value)" placeholder="Search users">
+        </mat-form-field>
+    </div>
+    <mat-card *ngIf="usedCriteria !== ''">
+        <mat-card-content class="loading-content">
+            <span *ngIf="dataLoading">Loading search data...</span>
+            <span *ngIf="!dataLoading">Found {{ searchResult.length }} for search criteria {{ usedCriteria }}</span>
+        </mat-card-content>
+    </mat-card>
+    <mat-table #table [dataSource]="dataSource" *ngIf="dataLoaded">
+
+        <!-- Weight Column-->
+        <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef [ngClass]="'customWidthClass'"> Actions </mat-header-cell>
+            <mat-cell *matCellDef="let user" [ngClass]="'customWidthClass'">
+                <button mat-raised-button color="accent" *ngIf="data.type === 'user'" [disabled]="user['team'] !== ''" (click)="addUser(user.username)">Add</button>
+                <button mat-raised-button color="accent" *ngIf="data.type === 'team_admin'" (click)="addTeamAdmin(user.username)">Add</button>
+            </mat-cell>
+        </ng-container>
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="lastName">
+            <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+            <mat-cell *matCellDef="let user"> {{user.firstName}} {{user.lastName}}</mat-cell>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="email">
+            <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+            <mat-cell *matCellDef="let user"> {{user.email}} </mat-cell>
+        </ng-container>
+
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="team">
+            <mat-header-cell *matHeaderCellDef> Current team </mat-header-cell>
+            <mat-cell *matCellDef="let user"> {{user.team}} </mat-cell>
+        </ng-container>
+
+
+        <mat-header-row *matHeaderRowDef="['actions', 'lastName', 'email', 'team']"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: ['actions', 'lastName', 'email', 'team'];"></mat-row>
+    </mat-table>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Cancel</button>
+</div>

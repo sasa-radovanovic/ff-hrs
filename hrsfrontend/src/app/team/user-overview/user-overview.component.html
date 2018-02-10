@@ -1,0 +1,85 @@
+<div class="bounds global-page-content-container">
+    <div class="content"
+         fxLayout="row"
+         fxFlexFill>
+
+        <div fxFlex="60" fxFlexOffset="20">
+            <mat-card>
+                <mat-card-title>
+                    User overview
+                    <span fxFlex></span>
+                    <button mat-raised-button color="accent" [routerLink]="['/user-overview', 'new']">
+                        Add user
+                    </button>
+                </mat-card-title>
+
+                <mat-card-content>
+                    <div class="example-container">
+                        <div class="filter-header">
+                            <mat-form-field>
+                                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search users">
+                            </mat-form-field>
+                        </div>
+
+                        <h4 class="user-search-status" *ngIf="usedCriteria.length > 2">Found {{users.length}} for search criteria '{{usedCriteria}}'</h4>
+
+                        <mat-table #userTable class="user-table" [dataSource]="dataSource">
+
+                            <!-- Weight Column-->
+                            <ng-container matColumnDef="actions">
+                                <mat-header-cell *matHeaderCellDef [ngClass]="'customWidthClass'"> Actions
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let user" [ngClass]="'customWidthClass'">
+                                    <button mat-raised-button color="accent" [routerLink]="['/user-overview', 'edit', user.username]">View</button>
+                                </mat-cell>
+                            </ng-container>
+
+                            <!-- Position Column -->
+                            <ng-container matColumnDef="lastName">
+                                <mat-header-cell *matHeaderCellDef> Name</mat-header-cell>
+                                <mat-cell *matCellDef="let user"> {{user.firstName}} {{user.lastName}}</mat-cell>
+                            </ng-container>
+
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="email">
+                                <mat-header-cell *matHeaderCellDef> Email</mat-header-cell>
+                                <mat-cell *matCellDef="let user"> {{user.email}}</mat-cell>
+                            </ng-container>
+
+
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="role">
+                                <mat-header-cell *matHeaderCellDef> Role</mat-header-cell>
+                                <mat-cell *matCellDef="let user">
+                                    <mat-icon color="accent" class="avatar-icon" *ngIf="user.role ==='ROLE_USER'" matTooltip="User">person_outline</mat-icon>
+                                    <mat-icon color="accent" class="avatar-icon" *ngIf="user.role ==='ROLE_TEAM_ADMIN'" matTooltip="Team admin: {{user.adminTeams}}">person</mat-icon>
+                                    <mat-icon color="accent" class="avatar-icon" *ngIf="user.role ==='ROLE_ADMIN'" matTooltip="Super admin">group</mat-icon>
+                                </mat-cell>
+                            </ng-container>
+
+
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="team">
+                                <mat-header-cell *matHeaderCellDef> Team</mat-header-cell>
+                                <mat-cell *matCellDef="let user"> {{user.team}}</mat-cell>
+                            </ng-container>
+
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="active">
+                                <mat-header-cell *matHeaderCellDef> Active</mat-header-cell>
+                                <mat-cell *matCellDef="let user">
+                                     <mat-checkbox [(ngModel)]="user.active" disabled></mat-checkbox>
+                                </mat-cell>
+                            </ng-container>
+
+                            <mat-header-row
+                                    *matHeaderRowDef="['actions', 'lastName', 'email', 'role', 'team', 'active']"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: ['actions', 'lastName', 'email', 'role', 'team', 'active'];"></mat-row>
+                        </mat-table>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+
+    </div>
+</div>

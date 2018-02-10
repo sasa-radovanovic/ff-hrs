@@ -1,0 +1,13 @@
+.brand-logo {
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.example-fill-remaining-space {
+    flex: 1 1 auto;
+}
+.navbar-link {
+    margin-right: 15px;
+
+}

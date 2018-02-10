@@ -1,0 +1,60 @@
+<div class="bounds global-page-content-container">
+    <div class="content"
+         fxLayout="row"
+         fxFlexFill>
+
+        <div fxFlex="60" fxFlexOffset="20">
+            <mat-card>
+                <mat-card-title>
+                    <span>Team overview</span>
+                    <span fxFlex></span>
+                    <button mat-raised-button color="accent" [routerLink]="['/team-overview', 'new']">
+                        New team
+                    </button>
+                </mat-card-title>
+
+                <mat-card-content>
+                    <div class="example-container">
+                        <div class="filter-header">
+                            <mat-form-field>
+                                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                            </mat-form-field>
+                        </div>
+
+                        <mat-table #table [dataSource]="dataSource">
+
+                            <!-- Position Column -->
+                            <ng-container matColumnDef="name">
+                                <mat-header-cell *matHeaderCellDef> Team name </mat-header-cell>
+                                <mat-cell *matCellDef="let team"> {{team.name}}</mat-cell>
+                            </ng-container>
+
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="members">
+                                <mat-header-cell *matHeaderCellDef> Members</mat-header-cell>
+                                <mat-cell *matCellDef="let team"> {{team.members}}</mat-cell>
+                            </ng-container>
+
+                            <!-- Weight Column-->
+                            <ng-container matColumnDef="actions">
+                                <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+                                <mat-cell *matCellDef="let team">
+                                    <button mat-raised-button color="accent" [routerLink]="['/team-overview', 'team-details', team.name]">Details</button>
+                                    <a mat-raised-button color="primary" (click)="deleteTeam(team.name)">Remove</a>
+                                </mat-cell>
+                            </ng-container>
+
+                            <mat-header-row *matHeaderRowDef="['name', 'members', 'actions']"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: ['name', 'members', 'actions'];"></mat-row>
+                        </mat-table>
+                        <mat-paginator #paginator
+                                       [pageSize]="10"
+                                       [pageSizeOptions]="[5, 10, 20]">
+                        </mat-paginator>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+
+    </div>
+</div>

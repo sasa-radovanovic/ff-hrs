@@ -1,0 +1,12 @@
+<mat-toolbar color="accent">
+    <a href="#" class="brand-logo">HRS</a>
+
+    <span class="example-fill-remaining-space"></span>
+
+    <button mat-button *ngIf="isSuperAdmin()" (click)="toMyRequests()">My requests</button>
+    <button mat-button *ngIf="isSuperAdmin()" (click)="toRequests()">Requests</button>
+    <button mat-button *ngIf="isSuperAdmin()" (click)="toTeams()">Teams</button>
+    <button mat-button *ngIf="isSuperAdmin()" (click)="toUsers()">Users</button>
+    <button mat-button (click)="logout()">Logout</button>
+</mat-toolbar>
+

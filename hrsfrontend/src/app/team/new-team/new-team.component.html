@@ -1,0 +1,43 @@
+<div class="bounds global-page-content-container">
+    <div class="content"
+         fxLayout="row"
+         fxFlexFill>
+
+        <div fxFlex="60" fxFlexOffset="20">
+            <mat-card>
+                <mat-card-title>
+                    <span>New team</span>
+                    <span fxFlex></span>
+                </mat-card-title>
+                <div>
+                    <form [formGroup]="newTeamForm" (ngSubmit)="onSubmit(newTeamForm.value)"
+                          class="new-team-form-container">
+                        <mat-form-field>
+                            <input matInput placeholder="Team Name" formControlName="teamName" required>
+                            <mat-error *ngIf="newTeamForm.get('teamName').hasError('required')">
+                                Team name is required
+                            </mat-error>
+                            <mat-error *ngIf="newTeamForm.get('teamName').hasError('validateName')">
+                                Name must contain only alphanumeric characters
+                            </mat-error>
+                            <mat-error *ngIf="newTeamForm.get('teamName').hasError('minlength')">
+                                Name must be at least 4 characters long
+                            </mat-error>
+                            <mat-error *ngIf="newTeamForm.get('teamName').hasError('nameTaken')">
+                                There is already a team with that name
+                            </mat-error>
+                        </mat-form-field>
+                    </form>
+                </div>
+                <mat-card-actions align="end">
+                    <button mat-raised-button color="accent" [disabled]="newTeamForm.invalid"
+                            (click)="onSubmit(newTeamForm.value)">Create new team
+                    </button>
+                </mat-card-actions>
+            </mat-card>
+            <pre>
+
+            </pre>
+        </div>
+    </div>
+</div>

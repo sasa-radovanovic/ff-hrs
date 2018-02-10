@@ -1,0 +1,36 @@
+<div class="bounds login-container">
+    <div class="content"
+         fxLayout="row"
+         fxFlexFill>
+
+        <div fxFlex="30" fxFlexOffset="35">
+            <mat-card class="mat-elevation-z8">
+                <mat-card-title>
+                    Holiday Request System
+                </mat-card-title>
+                <div>
+                    <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)" class="login-form-container">
+
+                            <mat-form-field>
+                                <input matInput placeholder="Username" formControlName="username" required>
+                                <mat-error *ngIf="loginForm.get('username').hasError('required')">Username is required</mat-error>
+                            </mat-form-field>
+                            <mat-form-field>
+                                <input matInput placeholder="Password" formControlName="password" type="password"
+                                       required>
+                                <mat-error *ngIf="loginForm.get('password').hasError('required')">Username is required</mat-error>
+                            </mat-form-field>
+
+                    </form>
+                </div>
+                <mat-card-actions align="end">
+                    <mat-error *ngIf="wrongCredentials" class="wrong-credentials-error">You entered wrong credentials</mat-error>
+                    <button mat-raised-button color="accent" [disabled]="loginForm.invalid" (click)="onSubmit(loginForm.value)">Login</button>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+
+    </div>
+</div>
+
+

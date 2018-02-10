@@ -1,0 +1,21 @@
+<div class="bounds global-page-content-container">
+    <div class="content"
+         fxLayout="row"
+         fxFlexFill>
+
+        <div fxFlex="80" fxFlexOffset="10" style="margin-bottom: 20px;">
+            <mat-card>
+                <mat-card-content>
+                    <mat-tab-group>
+                        <mat-tab label="Pending requests">
+                            <pending-requests [reloadData]="changes" (dataChanged)="handleChange($event)"></pending-requests>
+                        </mat-tab>
+                        <mat-tab label="Approved requests">
+                            <approved-requests [reloadData]="changes" (dataChanged)="handleChange($event)"></approved-requests>
+                        </mat-tab>
+                    </mat-tab-group>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>

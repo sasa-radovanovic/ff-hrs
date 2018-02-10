@@ -1,0 +1,66 @@
+<h1 mat-dialog-title *ngIf="data['type'] === 'confirm'">Confirm</h1>
+<h1 mat-dialog-title *ngIf="data['type'] === 'edit'">Edit</h1>
+<h1 mat-dialog-title *ngIf="data['type'] === 'multi-edit'">{{data['name']}}</h1>
+<div mat-dialog-content>
+    <div *ngIf="data['type'] === 'confirm'">
+       <h4 class="question">{{data['question']}}</h4>
+    </div>
+    <div *ngIf="data['type'] === 'edit'">
+        <form [formGroup]="editForm" (ngSubmit)="onFormYes(editForm.value)"
+              class="new-user-form-container">
+            <mat-form-field style="width: 100%;">
+                <input matInput placeholder="Email" formControlName="email" required>
+                <mat-error *ngIf="editForm.get('email').hasError('required')">
+                    Email is required
+                </mat-error>
+                <mat-error *ngIf="editForm.get('email').hasError('email')">
+                    Email format is not correct
+                </mat-error>
+                <mat-error *ngIf="editForm.get('email').hasError('emailTaken')">
+                    This email is already in use
+                </mat-error>
+            </mat-form-field>
+        </form>
+    </div>
+    <div *ngIf="data['type'] === 'multi-edit'">
+        <form [formGroup]="editNameForm" (ngSubmit)="onFormMultiEditYes(editNameForm.value)"
+              class="new-user-form-container">
+            <mat-form-field style="width: 100%;">
+                <input matInput placeholder="First Name" formControlName="firstName" required>
+                <mat-error *ngIf="editNameForm.get('firstName').hasError('required')">
+                    First name is required
+                </mat-error>
+                <mat-error *ngIf="editNameForm.get('firstName').hasError('minlength')">
+                    First name must be at least 2 characters long
+                </mat-error>
+                <mat-error *ngIf="editNameForm.get('firstName').hasError('maxlength')">
+                    First name can have max 20 characters
+                </mat-error>
+                <mat-error *ngIf="editNameForm.get('firstName').hasError('validateName')">
+                    First name can contain only alpabetical characters
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field style="width: 100%; margin-top: 10px;">
+                <input matInput placeholder="Last Name" formControlName="lastName" required>
+                <mat-error *ngIf="editNameForm.get('lastName').hasError('required')">
+                    Last name is required
+                </mat-error>
+                <mat-error *ngIf="editNameForm.get('lastName').hasError('minlength')">
+                    Last name must be at least 2 characters long
+                </mat-error>
+                <mat-error *ngIf="editNameForm.get('lastName').hasError('maxlength')">
+                    Last name can have max 20 characters
+                </mat-error>
+                <mat-error *ngIf="editNameForm.get('lastName').hasError('validateName')">
+                    Last name can contain only alpabetical characters
+                </mat-error>
+            </mat-form-field>
+        </form>
+    </div>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Cancel</button>
+    <button mat-button *ngIf="data['type'] === 'edit'" (click)="onFormYes(editForm.value)" [disabled]="editForm.invalid">Confirm</button>
+    <button mat-button *ngIf="data['type'] === 'multi-edit'" (click)="onFormMultiEditYes(editNameForm.value)" [disabled]="editNameForm.invalid">Confirm</button>
+    <button mat-button *ngIf="data['type'] === 'confirm'" (click)="onYesClick()">Confirm</button>
+</div>

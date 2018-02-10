@@ -1,0 +1,20 @@
+.activation-container {
+    margin-top: 100px;
+}
+
+.content {
+    min-width: 300px;
+}
+
+.activation-form-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.activation-form-container > * {
+    width: 100%;
+}
+
+.loading-content {
+    padding-left: 40%;
+}

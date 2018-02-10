@@ -1,0 +1,65 @@
+
+.loading-content {
+    padding-left: 40%;
+}
+
+.user-card {
+    padding: 5px;
+    width: 95%;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.user-card-header {
+    height: 45px;
+    margin-top: 3px !important;
+}
+
+.user-header-image {
+    background-size: cover;
+}
+
+.avatar-icon {
+    height: 35px;
+    width: 35px;
+    font-size: 40px;
+}
+
+.requests-new {
+    position: absolute;
+    right: 20px;
+    font-size: 30px;
+    font-family: Roboto,"Helvetica Neue",sans-serif;
+}
+
+.unapproved-requests-label {
+    font-size: 12px;
+}
+
+
+.team-details-overview-card {
+    position: absolute;
+    right: 20px;
+    font-size: 30px;
+    bottom: -10px;
+}
+
+.add-user-btn {
+    margin-top: 20px;
+    width: 97%;
+}
+
+.search-user-header {
+    min-height: 64px;
+    padding: 8px 24px 0;
+    background: #ff99bb;
+}
+
+.mat-form-field {
+    font-size: 14px;
+    width: 100%;
+}
+
+.customWidthClass {
+    flex: 0 0 95px;
+}

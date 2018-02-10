@@ -1,0 +1,85 @@
+<div class="bounds global-page-content-container">
+    <div class="content"
+         fxLayout="row"
+         fxFlexFill>
+
+        <div fxFlex="60" fxFlexOffset="20" class="mat-elevation-z8">
+            <mat-card *ngIf="!detailsLoaded">
+                <mat-card-content class="loading-content">
+                    <mat-spinner color="accent"></mat-spinner>
+                </mat-card-content>
+            </mat-card>
+            <mat-card *ngIf="detailsLoaded">
+                <mat-card-title>
+                    Team details {{teamDetails['name']}}
+                </mat-card-title>
+
+
+                <mat-card-content>
+                    <div fxLayout="row" fxFlexFill>
+                        <div fxFlex="33">
+                            <mat-card class="mat-elevation-z6">
+                                <mat-card-header>
+                                    <mat-card-title>Team members</mat-card-title>
+                                    <mat-card-subtitle class="team-details-overview-card">{{ teamDetails['users'].length }}</mat-card-subtitle>
+                                </mat-card-header>
+                            </mat-card>
+                        </div>
+                        <div fxFlex="33">
+                            <mat-card class="mat-elevation-z6">
+                                <mat-card-header>
+                                    <mat-card-title>Total holiday requests</mat-card-title>
+                                    <mat-card-subtitle class="team-details-overview-card">{{ totalRequests }}</mat-card-subtitle>
+                                </mat-card-header>
+                            </mat-card>
+                        </div>
+                        <div fxFlex="33">
+                            <mat-card class="mat-elevation-z6">
+                                <mat-card-header>
+                                    <mat-card-title>Total pending requests</mat-card-title>
+                                    <mat-card-subtitle class="team-details-overview-card">{{ totalPending }}</mat-card-subtitle>
+                                </mat-card-header>
+                            </mat-card>
+                        </div>
+                    </div>
+                    <div fxLayout="row" fxFlexFill>
+                        <div fxFlex="50">
+                            <h4>Team admins</h4>
+                            <mat-card class="user-card mat-elevation-z6" (click)="userClicked()" *ngFor="let teamAdmin of teamDetails['teamAdmins']">
+                                <mat-card-header class="user-card-header">
+                                    <div mat-card-avatar class="user-header-image">
+                                        <mat-icon color="accent" class="avatar-icon" *ngIf="teamAdmin.role==='ROLE_TEAM_ADMIN'">person</mat-icon>
+                                    </div>
+                                    <mat-card-title>{{teamAdmin.firstName}} {{teamAdmin.lastName}}</mat-card-title>
+                                    <mat-card-subtitle>{{teamAdmin.email}}</mat-card-subtitle>
+                                </mat-card-header>
+                            </mat-card>
+                            <button mat-raised-button color="primary" class="add-user-btn" (click)="newTeamAdmin()"> Add new team admin </button>
+                        </div>
+                        <div fxFlex="50">
+                            <h4>Team members</h4>
+                            <mat-card class="user-card mat-elevation-z6" (click)="userClicked()" *ngFor="let user of teamDetails['users']">
+                                <mat-card-header class="user-card-header">
+                                    <div mat-card-avatar class="user-header-image">
+                                        <mat-icon color="accent" class="avatar-icon" *ngIf="user.role ==='ROLE_USER'">person_outline</mat-icon>
+                                        <mat-icon color="accent" class="avatar-icon" *ngIf="user.role ==='ROLE_TEAM_ADMIN'">person</mat-icon>
+                                    </div>
+                                    <mat-card-title>{{user.firstName}} {{user.lastName}}</mat-card-title>
+                                    <mat-card-subtitle>{{user.email}}</mat-card-subtitle>
+                                    <div class="requests-new" *ngIf="user.totalUnapproved > 0">
+                                        <span  color="accent" matTooltip="Pending requests: {{user.totalUnapproved}}"> {{user.totalUnapproved}} </span>
+                                    </div>
+                                </mat-card-header>
+                            </mat-card>
+                            <button mat-raised-button color="primary" class="add-user-btn" (click)="newUser()"> Add new user </button>
+                        </div>
+                    </div>
+
+                </mat-card-content>
+
+            </mat-card>
+        </div>
+
+    </div>
+</div>
+

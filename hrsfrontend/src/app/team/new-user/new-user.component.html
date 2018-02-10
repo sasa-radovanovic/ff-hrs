@@ -1,0 +1,87 @@
+<div class="bounds global-page-content-container">
+    <div class="content"
+         fxLayout="row"
+         fxFlexFill>
+
+        <div fxFlex="60" fxFlexOffset="20">
+            <mat-card>
+                <mat-card-title>
+                    <span>New User</span>
+                    <span fxFlex></span>
+                </mat-card-title>
+                <div>
+                    <form [formGroup]="newUserForm" (ngSubmit)="onSubmit(newUserForm.value)"
+                          class="new-user-form-container">
+                        <div>
+                            <mat-form-field fxFlex="45">
+                                <input matInput placeholder="First Name" formControlName="firstName" required>
+                                <mat-error *ngIf="newUserForm.get('firstName').hasError('required')">
+                                    First name is required
+                                </mat-error>
+                                <mat-error *ngIf="newUserForm.get('firstName').hasError('minlength')">
+                                    First name must be at least 2 characters long
+                                </mat-error>
+                                <mat-error *ngIf="newUserForm.get('firstName').hasError('maxlength')">
+                                    First name can have max 20 characters
+                                </mat-error>
+                                <mat-error *ngIf="newUserForm.get('firstName').hasError('validateName')">
+                                    First name can contain only alpabetical characters
+                                </mat-error>
+                            </mat-form-field>
+                            <div fxFlex="10"></div>
+                            <mat-form-field fxFlex="45">
+                                <input matInput placeholder="Last Name" formControlName="lastName" required>
+                                <mat-error *ngIf="newUserForm.get('lastName').hasError('required')">
+                                    Last name is required
+                                </mat-error>
+                                <mat-error *ngIf="newUserForm.get('lastName').hasError('minlength')">
+                                    Last name must be at least 2 characters long
+                                </mat-error>
+                                <mat-error *ngIf="newUserForm.get('lastName').hasError('maxlength')">
+                                    Last name can have max 20 characters
+                                </mat-error>
+                                <mat-error *ngIf="newUserForm.get('lastName').hasError('validateName')">
+                                    Last name can contain only alpabetical characters
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div>
+                            <mat-form-field fxFlex="45">
+                                <input matInput placeholder="Email" formControlName="email" required
+                                       (ngModelChange)="valuechange($event)">
+                                <mat-error *ngIf="newUserForm.get('email').hasError('required')">
+                                    Email is required
+                                </mat-error>
+                                <mat-error *ngIf="newUserForm.get('email').hasError('email')">
+                                    Email format is not correct
+                                </mat-error>
+                                <mat-error *ngIf="newUserForm.get('email').hasError('emailTaken')">
+                                    This email is already in use
+                                </mat-error>
+                            </mat-form-field>
+                            <div fxFlex="10"></div>
+                            <mat-form-field fxFlex="45">
+                                <input matInput placeholder="Username" formControlName="username" required>
+                                <mat-error *ngIf="newUserForm.get('username').hasError('required')">
+                                    Username is required
+                                </mat-error>
+                                <mat-error *ngIf="newUserForm.get('username').hasError('validateUsername')">
+                                    Username must contain between 8 and 12 characters, at least one letter and one
+                                    number
+                                </mat-error>
+                                <mat-error *ngIf="newUserForm.get('username').hasError('usernameTaken')">
+                                    This username already exists
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </form>
+                </div>
+                <mat-card-actions align="end" style="margin-top: 15px;">
+                    <button mat-raised-button color="accent" [disabled]="newUserForm.invalid || creatingUser"
+                            (click)="onSubmit(newUserForm.value)">Create new user
+                    </button>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+    </div>
+</div>

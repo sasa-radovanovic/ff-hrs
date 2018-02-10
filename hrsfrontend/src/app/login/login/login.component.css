@@ -1,0 +1,21 @@
+.login-container {
+    margin-top: 100px;
+}
+
+
+.content {
+    min-width: 300px;
+}
+
+.login-form-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-form-container > * {
+    width: 100%;
+}
+
+.wrong-credentials-error {
+    padding-top: 10px;
+}
